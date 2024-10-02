@@ -15,6 +15,9 @@ def main():
     conn = create_connection()
     cursor = conn.cursor()
     timeNow = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Create table if not exists
+    create_polestar_vesselInfo(cursor)
+    create_polestar_voyage(cursor)
     # retrive Voyage data
     results = select_polestar_vesselInfo(cursor)
 

@@ -15,8 +15,9 @@ def main():
     conn = create_connection()
     cursor = conn.cursor()
     timeNow = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Create table if not exists
+    create_polestar_vesselInfo(cursor)
     # retrive Voyage data
-
     delete_polestar_vesselInfo(cursor)
 
     positionData = getSubscription()  # Subscription gives last known position of all vessels
