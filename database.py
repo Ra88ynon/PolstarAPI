@@ -146,24 +146,44 @@ def insert_polestar_vesselInfo(cursor, vesselInfo):
            vesselInfo['shipBuilder'],
            vesselInfo['countryOfBuild'], vesselInfo['yearOfBuild'], vesselInfo['create_time'])
     logging.info(tup)
-    cursor.execute(
-        f'''
-        DECLARE @InputIMO varchar(10) = '{vesselInfo['IMONumber']}'
-        DECLARE @RowCount INT;
-        SELECT @RowCount = COUNT(*)
-        FROM polestar_vesselInfo
-        WHERE IMONumber = @InputIMO;
-        IF @RowCount = 0 and @InputIMO <> 'None'
-        Begin
-       Insert INTO polestar_vesselInfo (imonumber,mmsi,subscriptionID,companyname,shipname,technicalManager,shipType,callSign,flagName,portOfRegistry,classificationSociety,
-       registeredOwner,operator,deadweight,displacement,grossTonnage,lenthOverall,breadth,depth,draught,shipBuilder,countryOfBuild,yearOfBuild,create_time)
-       VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)end''',
-        tup)
+
+    vessel_imo_number = vesselInfo['IMONumber']
+    if vessel_imo_number and vessel_imo_number != 'None':
+        # Check if the vessel already exists in the table
+        cursor.execute('''
+                SELECT COUNT(*) 
+                FROM polestar_vesselInfo
+                WHERE IMONumber = %s
+            ''', (vessel_imo_number,))
+
+        row_count = cursor.fetchone()[0]
+        # Only insert if the vessel is not already in the table
+        if row_count == 0:
+            cursor.execute(
+                f'''
+               Insert INTO polestar_vesselInfo (imonumber,mmsi,subscriptionID,companyname,shipname,technicalManager,shipType,callSign,flagName,portOfRegistry,classificationSociety,
+               registeredOwner,operator,deadweight,displacement,grossTonnage,lenthOverall,breadth,depth,draught,shipBuilder,countryOfBuild,yearOfBuild,create_time)
+               VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)end''',
+                tup)
+
+    # cursor.execute(
+    #     f'''
+    #     DECLARE @InputIMO varchar(10) = '{vesselInfo['IMONumber']}'
+    #     DECLARE @RowCount INT;
+    #     SELECT @RowCount = COUNT(*)
+    #     FROM polestar_vesselInfo
+    #     WHERE IMONumber = @InputIMO;
+    #     IF @RowCount = 0 and @InputIMO <> 'None'
+    #     Begin
+    #    Insert INTO polestar_vesselInfo (imonumber,mmsi,subscriptionID,companyname,shipname,technicalManager,shipType,callSign,flagName,portOfRegistry,classificationSociety,
+    #    registeredOwner,operator,deadweight,displacement,grossTonnage,lenthOverall,breadth,depth,draught,shipBuilder,countryOfBuild,yearOfBuild,create_time)
+    #    VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)end''',
+    #     tup)
     return cursor
 
 
 def delete_polestar_vesselInfo(cursor):
-    cursor.execute("delete from polestar_vesselInfo")
+    cursor.execute("TRUNCATE TABLE IF EXISTS polestar_vesselInfo")
     return cursor
 
 
