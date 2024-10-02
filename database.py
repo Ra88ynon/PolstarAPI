@@ -50,8 +50,8 @@ def create_polestar_position(cur, database_name="DEV_WSM_DB", schema_name="API")
         CYCLONE_LATITUDE VARCHAR(15),
         CYCLONE_LONGITUDE VARCHAR(15),
         CYCLONE_SPEED VARCHAR(20),
-        REPORT_TIME TIMESTAMP_NTZ(9),
-        CREATE_TIME TIMESTAMP_NTZ(9)
+        REPORT_TIME DATETIME,
+        CREATE_TIME DATETIME
     );
     """
     cur.execute(create_sql)
@@ -68,8 +68,8 @@ def create_polestar_voyage(cur, database_name="DEV_WSM_DB", schema_name="API"):
         ETA VARCHAR(30),
         DESTINATION VARCHAR(50),
         SHIPTYPE VARCHAR(100),
-        REPORT_TIME TIMESTAMP_NTZ(9),
-        CREATE_TIME TIMESTAMP_NTZ(9)
+        REPORT_TIME DATETIME,
+        CREATE_TIME DATETIME
     );
     """
     cur.execute(create_sql)
@@ -104,7 +104,7 @@ def create_polestar_vesselInfo(cur, database_name="DEV_WSM_DB", schema_name="API
         SHIPBUILDER VARCHAR(150),
         COUNTRYOFBUILD VARCHAR(50),
         YEAROFBUILD NUMBER(38,0),
-        CREATE_TIME TIMESTAMP_NTZ(9)
+        CREATE_TIME DATETIME
         );
     """
     cur.execute(create_sql)
