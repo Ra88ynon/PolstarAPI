@@ -12,12 +12,12 @@ DB_USER = config.get('DATABASE', 'DB_USER')
 DB_PASSWORD = config.get('DATABASE', 'DB_PASSWORD')
 DB_DATABASE = config.get('DATABASE', 'DB_DATABASE')
 
-snowflake_user = os.getenv("snowflake_user")
-snowflake_password = os.getenv("snowflake_password")
-snowflake_account = os.getenv("snowflake_account")
-snowflake_warehouse = os.getenv("snowflake_warehouse")
-snowflake_database = os.getenv("snowflake_database")
-snowflake_schema = os.getenv("snowflake_schema")
+snowflake_user = config.get('DATABASE', "snowflake_user")
+snowflake_password = config.get('DATABASE', "snowflake_password")
+snowflake_account = config.get('DATABASE', "snowflake_account")
+snowflake_warehouse = config.get('DATABASE', "snowflake_warehouse")
+snowflake_database = config.get('DATABASE', "snowflake_database")
+snowflake_schema = config.get('DATABASE', "snowflake_schema")
 
 
 def create_connection():
