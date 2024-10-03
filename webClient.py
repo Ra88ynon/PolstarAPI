@@ -7,7 +7,7 @@ import logging
 import configparser
 
 config = configparser.ConfigParser()
-config.read('E:\\WebClient\\config.ini')
+config.read('config.ini')  # changed to relative path
 
 BASE_URL = config.get('API', 'BASE_URL')
 NEWAPI_URL = config.get('API', 'NEWAPI_URL')

@@ -4,7 +4,7 @@ import logging
 import configparser
 
 config = configparser.ConfigParser()
-config.read('E:\\WebClient\\config.ini')
+config.read('config.ini')  # changed to relative path
 
 DB_SERVER = config.get('DATABASE', 'DB_SERVER')
 DB_USER = config.get('DATABASE', 'DB_USER')
