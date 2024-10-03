@@ -1,4 +1,3 @@
-# import os
 import snowflake.connector as sf
 import logging
 # import ConfigParser#replace configparsert 2024June 5
