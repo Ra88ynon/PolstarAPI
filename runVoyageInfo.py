@@ -1,5 +1,6 @@
 from webClient import *
 from database import *
+from snowflake.connector import DictCursor
 import logging
 # import json
 import datetime
@@ -13,20 +14,19 @@ logging.basicConfig(
 
 def main():
     conn = create_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(DictCursor)
     timeNow = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # Create table if not exists
     create_polestar_vesselInfo(cursor)
     create_polestar_voyage(cursor)
     # retrive Voyage data
     results = select_polestar_vesselInfo(cursor)
-
     for item in results:
         mmsi = str(item.get('mmsi'))
         voyageData = getVoyage(mmsi)
 
         voyageInfo = {}
-        logging.debug('getting voyage info for : ' + mmsi)
+        logging.info('getting voyage info for : ' + mmsi)
         # if no voyage is found
         if voyageData.get('IMONumber') == "MMSI not found":
             pass
