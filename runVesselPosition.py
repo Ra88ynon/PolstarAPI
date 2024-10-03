@@ -7,7 +7,7 @@ import datetime
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
-    filename='E:\\WebClient\\runVesselPosition.log',
+    filename='runVesselPosition.log',  # changed to relative path
     datefmt='%Y-%m-%d %H:%M:%S')
 
 
