@@ -36,7 +36,7 @@ def create_polestar_position(cur, database_name="DEV_WSM_DB", schema_name="API")
     Create (if not exists) the table polestar_position
     """
     create_sql = f"""
-    CREATE TABLE IF NOT EXISTS {database_name}.{schema_name}.LOAD_POLESTAR_POSITION (
+    CREATE TABLE IF NOT EXISTS {database_name}.{schema_name}.POLESTAR_POSITION (
         IMONUMBER VARCHAR(20),
         SPEED VARCHAR(15),
         HEADING VARCHAR(15),
@@ -61,7 +61,7 @@ def create_polestar_voyage(cur, database_name="DEV_WSM_DB", schema_name="API"):
     Create (if not exists) the table polestar_voyage
     """
     create_sql = f"""
-    CREATE TABLE IF NOT EXISTS {database_name}.{schema_name}.LOAD_POLESTAR_VOYAGE (
+    CREATE TABLE IF NOT EXISTS {database_name}.{schema_name}.POLESTAR_VOYAGE (
         IMONUMBER VARCHAR(20),
         DRAUGHT VARCHAR(20),
         ETA VARCHAR(30),
@@ -79,7 +79,7 @@ def create_polestar_vesselInfo(cur, database_name="DEV_WSM_DB", schema_name="API
     Create (if not exists) the table polestar_vesselInfo
     """
     create_sql = f"""
-    CREATE TABLE IF NOT EXISTS {database_name}.{schema_name}.LOAD_POLESTAR_VESSELINFO (
+    CREATE TABLE IF NOT EXISTS {database_name}.{schema_name}.POLESTAR_VESSELINFO (
         IMONUMBER VARCHAR(20),
         MMSI VARCHAR(20),
         SUBSCRIPTIONID VARCHAR(20),
