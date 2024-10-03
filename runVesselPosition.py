@@ -78,7 +78,7 @@ def main():
 
     logging.info('Finished inserting position Info')
 
-    conn.commit()
+    conn.close()
 
 
 main()

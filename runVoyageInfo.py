@@ -41,7 +41,7 @@ def main():
 
             # insert into database
             insert_polestar_voyage(cursor, voyageInfo)
-            conn.commit()
-
+            # conn.commit()
+    conn.close()
 
 main()

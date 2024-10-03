@@ -86,7 +86,7 @@ def main():
         logging.info('Inserting vessel: ' + vesselInfo['IMONumber'] + ' : ' + vesselInfo['shipName'])
     logging.info('Finished writing vessel Info')
 
-    conn.commit()
+    conn.close()
 
 
 # insert into database
