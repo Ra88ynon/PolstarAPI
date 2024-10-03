@@ -111,14 +111,22 @@ def create_polestar_vesselInfo(cur, database_name="DEV_WSM_DB", schema_name="API
 
 def insert_polestar_position(cursor, vessel):
     # print(vessel)
+    # Manually convert empty string datetime to "1900-01-01T00:00:00Z"
+    timestamp_gnss_raw = vessel['timestamp_gnss']
+    timestamp_gnss = timestamp_gnss_raw if timestamp_gnss_raw else "1900-01-01T00:00:00Z"
+
     tup = (vessel['imo_number'], vessel['speed'], vessel['heading'], vessel['latitude'], vessel['longitude'],
            vessel['alert_status'], vessel['cyclone_name'],
            vessel['cyclone_type'], vessel['cyclone_distance'], vessel['cyclone_latitude'], vessel['cyclone_longitude'],
-           vessel['cyclone_speed'], vessel['timestamp_gnss'],
+           vessel['cyclone_speed'], timestamp_gnss,
            vessel['create_time'])
     logging.info(tup)
+
+    # Sanitize the tuple by replacing empty strings with None
+    # cleaned_tup = tuple([s if s else None for s in tup])
+
     cursor.execute(
-        "Insert INTO polestar_position (imonumber,speed,heading,latitude,longitude,alert_status,cyclone_name,cyclone_type,cyclone_distance,cyclone_latitude,cyclone_longitude,cyclone_speed,report_time,create_time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,convert(datetimeoffset,%s,121),%s)",
+        "Insert INTO polestar_position (imonumber,speed,heading,latitude,longitude,alert_status,cyclone_name,cyclone_type,cyclone_distance,cyclone_latitude,cyclone_longitude,cyclone_speed,report_time,create_time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
         tup)
     return cursor
 
@@ -159,10 +167,11 @@ def insert_polestar_vesselInfo(cursor, vesselInfo):
         # Only insert if the vessel is not already in the table
         if row_count == 0:
             cursor.execute(
-                f'''
+                """
                Insert INTO polestar_vesselInfo (imonumber,mmsi,subscriptionID,companyname,shipname,technicalManager,shipType,callSign,flagName,portOfRegistry,classificationSociety,
                registeredOwner,operator,deadweight,displacement,grossTonnage,lenthOverall,breadth,depth,draught,shipBuilder,countryOfBuild,yearOfBuild,create_time)
-               VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)end''',
+               VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            """,
                 tup)
 
     # cursor.execute(
