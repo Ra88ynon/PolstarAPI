@@ -22,7 +22,7 @@ def main():
     # retrive Voyage data
     results = select_polestar_vesselInfo(cursor)
     for item in results:
-        mmsi = str(item.get('mmsi'))
+        mmsi = str(item.get('MMSI'))  # Column names are all uppercase now
         voyageData = getVoyage(mmsi)
 
         voyageInfo = {}
