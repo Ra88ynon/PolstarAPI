@@ -17,6 +17,7 @@ snowflake_account = config.get('DATABASE', "snowflake_account")
 snowflake_warehouse = config.get('DATABASE', "snowflake_warehouse")
 snowflake_database = config.get('DATABASE', "snowflake_database")
 snowflake_schema = config.get('DATABASE', "snowflake_schema")
+snowflake_role = config.get('DATABASE', "snowflake_role")
 
 
 def create_connection():
@@ -26,7 +27,8 @@ def create_connection():
         account=snowflake_account,
         database=snowflake_database,
         schema=snowflake_schema,
-        warehouse=snowflake_warehouse
+        warehouse=snowflake_warehouse,
+        role=snowflake_role
     )
     return conn
 
